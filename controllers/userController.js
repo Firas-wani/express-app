@@ -77,8 +77,23 @@ try {
 }
 
 
+const getUserDetails=async(req,res)=>{
+    try {
+        const _id=req.user;
+        if(_id){
+            const getUser=await User.findById(_id)
+            messageHandler(res,200,{
+                userDetails:getUser
+            });
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
 
 
-   module.exports =  {handleSignUp, handleLogin}
+
+
+   module.exports =  {handleSignUp, handleLogin,getUserDetails}
