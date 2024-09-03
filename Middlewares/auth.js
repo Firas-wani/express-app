@@ -13,7 +13,6 @@ const isAuthenticated =(req,res,next)=>{
             if(error){
                 messageHandler(res,401,"Unauthorised")
             }else{
-                console.log(decode)
                 req.user=decode._id;
                 return next();
             }

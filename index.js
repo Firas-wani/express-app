@@ -5,7 +5,7 @@ const cookie =require("cookie-parser")
 const bodyParser = require('body-parser');
 const cors =require("cors")
 const isAuthenticated =require("./Middlewares/auth")
-const { handleSignUp , handleLogin, getUserDetails } = require('./controllers/userController');
+const { handleSignUp , handleLogin, getUserDetails, messenger, editUser, deleteUser } = require('./controllers/userController');
 const {config} = require ('dotenv');
 config("/.env")
 
@@ -26,6 +26,8 @@ server.post("/user/login" , handleLogin )
 //Authenticated Routes for User
 
 server.get("/user/details",isAuthenticated,getUserDetails)
+server.put("/user/edit",isAuthenticated,editUser)
+server.delete("/user/delete",isAuthenticated,deleteUser)
 
 
 
