@@ -7,6 +7,7 @@ const cors =require("cors")
 const isAuthenticated =require("./Middlewares/auth")
 const { handleSignUp , handleLogin, getUserDetails, messenger, editUser, deleteUser } = require('./controllers/userController');
 const {config} = require ('dotenv');
+const verifyUser = require('./controllers/verifyUser');
 config("/.env")
 
 const server = express();  
@@ -15,12 +16,10 @@ server.use(express.json())
 server.use(bodyParser.json())
 server.use(cors())
 server.use(cookie())
-
-
 // Api routes for User
-
 server.post("/user/signup", handleSignUp)
 server.post("/user/login" , handleLogin )
+server.get("/token/verify",verifyUser)
 
 
 //Authenticated Routes for User
