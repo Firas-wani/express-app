@@ -64,6 +64,7 @@ try {
         if(token){
             res.cookie("token",token)
             res.status(200).json({message:"User Logged in Sucessfully"})
+           
         }
 
         
@@ -76,9 +77,60 @@ try {
 }
 }
 
+// userdetails
+ const getUserDetails=async(req,res)=>{
+    try {
+        const _id=req.user;
+        if(_id){
+            const getUser=await User.findById(_id)
+            messageHandler(res,200,{
+                userDetails:getUser
+            });
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+// edit user
+const editUser = async(req,res)=>{
+    try {
+        const {username, email} = req.body;
+       const _id = req.user;
+       const findUser = await  User.findById(_id);
+       if (findUser){
+        const editUser = await User.findByIdAndUpdate(_id,{
+            email,
+            username
+        })
+        if(editUser){
+          return messageHandler(res,202,"user updated sucessfully")
+        }else{
+            res.json({message:"some error"})
+        }
+       }
 
+ } catch (error) {
+        console.log(error);
+        
+    }
+}
+// delete user
+const deleteUser = async(req,res)=>{
+try {
+    const id = req.user;
+    if(_id){
+        const deleteUser = await User.findByIdAndDelete(_id);
+        if (deleteUser){
+            return messageHandler(res,200, "User Deleted")
+        }else{
+            res.json({message:"no user"})
+        }
 
+    }
+} catch (error) {
+    console.log(error);
+    
+}
+}
 
-
-
-   module.exports =  {handleSignUp, handleLogin}
+   module.exports =  {handleSignUp, handleLogin, getUserDetails, editUser, deleteUser}
