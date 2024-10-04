@@ -11,7 +11,7 @@ try {
 
     jwt.verify(token,secretKey,(error,decode)=>{
         if(error){
-            messageHandler(res,401,"Unauthorised")
+           return (res,401,"Unauthorised")
         }else{
             console.log(decode)
             req.user=decode._id;
